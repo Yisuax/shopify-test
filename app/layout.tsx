@@ -5,6 +5,7 @@ import { CartProvider } from '@/components/cart/CartContext'
 import CartDrawer from '@/components/cart/CartDrawer'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
+import { ThemeProvider } from '@/context/ThemeContext'
 import { brand } from '@/config/brand'
 
 // ---------------------------------------------------------------------------
@@ -78,15 +79,26 @@ export default function RootLayout({
   return (
     <html
       lang="en"
+      suppressHydrationWarning
       className={`${bebasNeue.variable} ${barlow.variable} ${barlowCondensed.variable} h-full`}
     >
+      <head>
+        {/* Anti-flash: runs before first paint to avoid theme flicker */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var t=localStorage.getItem('viking-theme');var r=document.documentElement;r.classList.remove('dark','light');r.classList.add(t==='light'?'light':'dark');}catch(e){document.documentElement.classList.add('dark');}})();`,
+          }}
+        />
+      </head>
       <body className="min-h-full flex flex-col antialiased">
-        <CartProvider>
-          <Header />
-          <CartDrawer />
-          <main className="flex-1">{children}</main>
-          <Footer />
-        </CartProvider>
+        <ThemeProvider>
+          <CartProvider>
+            <Header />
+            <CartDrawer />
+            <main className="flex-1" style={{ paddingTop: '110px' }}>{children}</main>
+            <Footer />
+          </CartProvider>
+        </ThemeProvider>
       </body>
     </html>
   )

@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 /* ---------------------------------------------------------------------------
-   Brand CSS Custom Properties
+   Brand CSS Custom Properties — dark defaults
 --------------------------------------------------------------------------- */
 :root {
   --color-bg: #0a0a0a;
@@ -14,9 +14,12 @@
   --color-text-faint: #555555;
   --color-accent: #c8922a;
   --color-accent-hover: #e0a830;
-  --color-accent-light: #c8922a1a;
   --color-border: #1e1e1e;
-  --color-border-subtle: #141414;
+  /* Page background (used by gradients that must blend into page) */
+  --page-bg: #131313;
+  /* Shop banner gradient stops */
+  --banner-bg-start: #1a1816;
+  --banner-bg-end: #131313;
 }
 
 /* ---------------------------------------------------------------------------
@@ -30,7 +33,6 @@
   --font-sans: var(--font-barlow), "Barlow", sans-serif;
   --font-label: var(--font-barlow-condensed), "Barlow Condensed", sans-serif;
 
-  /* ── Design system tokens (matches reference HTML tailwind config) ── */
   --color-primary: #f8bc51;
   --color-primary-container: #c8922a;
   --color-on-primary: #422c00;
@@ -49,7 +51,7 @@
 }
 
 /* ---------------------------------------------------------------------------
-   Base styles
+   Base
 --------------------------------------------------------------------------- */
 *,
 *::before,
@@ -80,14 +82,12 @@ body {
   font-family: var(--font-display);
 }
 
-h1,
-h2,
-h3 {
+h1, h2, h3 {
   letter-spacing: 0.02em;
 }
 
 /* ---------------------------------------------------------------------------
-   Chrome shimmer utility
+   Chrome shimmer
 --------------------------------------------------------------------------- */
 @keyframes chrome-shimmer {
   0%   { background-position: -200% center; }
@@ -111,38 +111,142 @@ h3 {
 }
 
 /* ---------------------------------------------------------------------------
-   Scrollbar styling
+   Scrollbar
 --------------------------------------------------------------------------- */
-::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
-}
-
-::-webkit-scrollbar-track {
-  background: var(--color-bg);
-}
-
-::-webkit-scrollbar-thumb {
-  background: #2a2a2a;
-  border-radius: 0;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: var(--color-accent);
-}
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: var(--color-bg); }
+::-webkit-scrollbar-thumb { background: #2a2a2a; border-radius: 0; }
+::-webkit-scrollbar-thumb:hover { background: var(--color-accent); }
 
 /* ---------------------------------------------------------------------------
-   Focus visible
+   Focus / Selection
 --------------------------------------------------------------------------- */
 :focus-visible {
   outline: 2px solid var(--color-accent);
   outline-offset: 2px;
 }
 
-/* ---------------------------------------------------------------------------
-   Selection
---------------------------------------------------------------------------- */
 ::selection {
   background-color: var(--color-accent);
   color: #000;
 }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   LIGHT MODE — complete unified warm linen system
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+html.light {
+  color-scheme: light;
+  /* Override CSS vars for gradient-based elements */
+  --page-bg: #EFEDE8;
+  --banner-bg-start: #2A2520;
+  --banner-bg-end: #EFEDE8;
+}
+
+html.light,
+html.light body {
+  background-color: #EFEDE8;
+  color: #1C1917;
+}
+
+/* ── Hero section — ALWAYS stays dark, never overridden ── */
+html.light .hero-section {
+  background-color: #131313 !important;
+}
+
+/* ── Section backgrounds ── */
+html.light .bg-\[\#080808\]  { background-color: #EFEDE8 !important; }
+html.light .bg-\[\#0a0a0a\]  { background-color: #EFEDE8 !important; }
+html.light .bg-\[\#0A0A0A\]  { background-color: #EFEDE8 !important; }
+html.light .bg-\[\#0e0e0e\]  { background-color: #E4E0DA !important; }
+html.light .bg-\[\#0E0E0E\]  { background-color: #E4E0DA !important; }
+html.light .bg-\[\#0f0f0f\]  { background-color: #ECEAE5 !important; }
+html.light .bg-\[\#131313\]  { background-color: #ECEAE5 !important; }
+html.light .bg-\[\#141414\]  { background-color: #E4E0DA !important; }
+html.light .bg-\[\#1a1a1a\]  { background-color: #E2DED8 !important; }
+html.light .bg-\[\#1A1A1A\]  { background-color: #E2DED8 !important; }
+html.light .bg-\[\#1C1B1B\]  { background-color: #ECEAE5 !important; }
+html.light .bg-\[\#201F1F\]  { background-color: #E4E0DA !important; }
+html.light .bg-\[\#2A2A2A\]  { background-color: #DAD6CF !important; }
+html.light .bg-\[\#2a2a2a\]  { background-color: #DAD6CF !important; }
+html.light .bg-\[\#353534\]  { background-color: #D2CEC6 !important; }
+html.light .min-h-screen      { background-color: #EFEDE8 !important; }
+
+/* ── Named surface classes ── */
+html.light .bg-surface                    { background-color: #EFEDE8 !important; }
+html.light .bg-background                 { background-color: #EFEDE8 !important; }
+html.light .bg-surface-container-lowest   { background-color: #E4E0DA !important; }
+html.light .bg-surface-container-low      { background-color: #ECEAE5 !important; }
+html.light .bg-surface-container          { background-color: #E8E5E0 !important; }
+html.light .bg-surface-container-high     { background-color: #E2DED8 !important; }
+html.light .bg-surface-container-highest  { background-color: #DAD6CF !important; }
+
+/* ── Text colors ── */
+html.light .text-white          { color: #1C1917 !important; }
+html.light .text-\[\#E5E2E1\]   { color: #1C1917 !important; }
+html.light .text-\[\#e5e2e1\]   { color: #1C1917 !important; }
+html.light .text-on-surface     { color: #1C1917 !important; }
+html.light .text-\[\#aaa\]      { color: #44403C !important; }
+html.light .text-\[\#AAA\]      { color: #44403C !important; }
+html.light .text-\[\#888\]      { color: #57534E !important; }
+html.light .text-\[\#555\]      { color: #78716C !important; }
+html.light .text-\[\#333\]      { color: #A09690 !important; }
+html.light .text-\[\#9C8F7C\]   { color: #78716C !important; }
+html.light .text-\[\#C6C6CA\]   { color: #44403C !important; }
+html.light .text-on-surface-variant { color: #44403C !important; }
+html.light .text-outline        { color: #78716C !important; }
+html.light .text-secondary      { color: #78716C !important; }
+
+/* ── Borders ── */
+html.light .border-\[\#1e1e1e\]    { border-color: rgba(120,113,108,0.20) !important; }
+html.light .border-\[\#1E1E1E\]    { border-color: rgba(120,113,108,0.20) !important; }
+html.light .border-\[\#1a1a1a\]    { border-color: rgba(120,113,108,0.18) !important; }
+html.light .border-\[\#2a2a2a\]    { border-color: rgba(120,113,108,0.22) !important; }
+html.light .border-outline-variant { border-color: rgba(120,113,108,0.18) !important; }
+html.light .border-outline         { border-color: rgba(120,113,108,0.28) !important; }
+
+/* ── Shop banner title ── */
+html.light .shop-banner-title { color: #E5E2E1 !important; }
+html.dark  .shop-banner-title { color: #E5E2E1 !important; }
+
+/* ── Product cards ── */
+html.light .group.flex.flex-col.bg-\[\#0f0f0f\] {
+  background-color: #ECEAE5 !important;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06) !important;
+}
+
+/* ── Inputs ── */
+html.light input,
+html.light textarea,
+html.light select {
+  background-color: #E8E5E0 !important;
+  color: #1C1917 !important;
+  border-color: rgba(120, 113, 108, 0.25) !important;
+}
+html.light input::placeholder,
+html.light textarea::placeholder { color: #78716C !important; }
+
+/* ── Footer ── */
+html.light footer {
+  background-color: #E4E0DA !important;
+  border-top-color: rgba(120, 113, 108, 0.14) !important;
+}
+html.light footer p,
+html.light footer span { color: #78716C !important; }
+html.light footer a    { color: #78716C !important; }
+html.light footer a:hover { color: #1C1917 !important; }
+
+/* ── Cart drawer ── */
+html.light [role="dialog"] {
+  background-color: #ECEAE5 !important;
+  border-color: rgba(120, 113, 108, 0.15) !important;
+}
+
+/* ── Testimonials / border-left cards ── */
+html.light .border-l-4 { background-color: #ECEAE5 !important; }
+html.light p.italic     { color: #44403C !important; }
+
+/* ── Scrollbar ── */
+html.light ::-webkit-scrollbar-track { background: #E4E0DA; }
+html.light ::-webkit-scrollbar-thumb { background: #BDB8B0; }
+html.light ::-webkit-scrollbar-thumb:hover { background: #C8922A; }

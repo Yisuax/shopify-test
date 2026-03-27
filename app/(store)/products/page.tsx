@@ -1,9 +1,9 @@
 import { Suspense } from 'react'
-import Link from 'next/link'
 import type { Metadata } from 'next'
 import { getProducts } from '@/lib/shopify'
 import ShopFilters from './ShopFilters'
 import ShopProductGrid from './ShopProductGrid'
+import ShopBannerSection from './ShopBannerSection'
 import type { ShopifyProduct } from '@/lib/shopify/types'
 
 export const metadata: Metadata = {
@@ -148,31 +148,8 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
   const resolvedParams = await searchParams
 
   return (
-    <div className="min-h-screen bg-[#131313]">
-      {/* Hero Banner */}
-      <section className="relative h-[400px] w-full flex items-center justify-center overflow-hidden bg-[#0E0E0E] pt-20">
-        {/* Background overlay gradient */}
-        <div className="absolute inset-0 bg-gradient-to-t from-[#131313] via-transparent to-transparent" />
-
-        {/* Content */}
-        <div className="relative z-10 text-center px-4">
-          <nav className="flex justify-center items-center gap-2 mb-4 font-['Barlow_Condensed'] text-xs tracking-widest text-[#9C8F7C]">
-            <Link href="/" className="hover:text-[#F8BC51] transition-colors">
-              HOME
-            </Link>
-            <svg className="w-3 h-3 text-[#504536]" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-              <polyline points="9 18 15 12 9 6" />
-            </svg>
-            <span className="text-[#F8BC51]">SHOP ALL PRODUCTS</span>
-          </nav>
-          <h1 className="font-['Bebas_Neue'] text-7xl md:text-9xl tracking-tighter text-[#E5E2E1] leading-none">
-            SHOP ALL PRODUCTS
-          </h1>
-          <p className="font-['Barlow_Condensed'] text-[#F8BC51] tracking-[0.3em] mt-4 font-bold uppercase">
-            Industrial Grade Precision
-          </p>
-        </div>
-      </section>
+    <div className="min-h-screen" style={{ backgroundColor: 'var(--page-bg, #131313)' }}>
+      <ShopBannerSection />
 
       {/* Main Content */}
       <div className="max-w-[1600px] mx-auto px-8 py-12 flex flex-col md:flex-row gap-12">

@@ -4,50 +4,15 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { motion, useInView } from 'framer-motion'
 import { useRef } from 'react'
-import { ArrowRight } from 'lucide-react'
-
-interface CategoryItem {
-  title: string
-  subtitle: string
-  href: string
-  image: string
-}
-
-const categories: CategoryItem[] = [
-  {
-    title: 'Exhaust Systems',
-    subtitle: 'Straight stacks, turned-down kits, full systems',
-    href: '/collections/exhaust-systems',
-    image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80',
-  },
-  {
-    title: 'LED Lighting',
-    subtitle: 'Light bars, cab lights, headlight assemblies',
-    href: '/collections/led-lighting',
-    image: 'https://images.unsplash.com/photo-1544636331-e26879cd4d9b?w=800&q=80',
-  },
-  {
-    title: 'Chrome Accessories',
-    subtitle: 'Mirrors, grille guards, bug deflectors',
-    href: '/collections/chrome-accessories',
-    image: 'https://images.unsplash.com/photo-1558618048-fbd710b2b79e?w=800&q=80',
-  },
-  {
-    title: 'Interior Upgrades',
-    subtitle: 'Trim kits, shifter knobs, steering wheel covers',
-    href: '/collections/interior',
-    image: 'https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?w=800&q=80',
-  },
-]
 
 export default function CategoryBanner() {
   const ref = useRef<HTMLElement>(null)
   const inView = useInView(ref, { once: true, margin: '-60px' })
 
   return (
-    <section ref={ref} className="py-16 sm:py-24 bg-[#080808]">
+    <section ref={ref} className="bg-[#080808] py-16 sm:py-24">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
-        {/* Header */}
+        {/* Section header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
@@ -65,43 +30,143 @@ export default function CategoryBanner() {
           </h2>
         </motion.div>
 
-        {/* Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          {categories.map((cat, i) => (
+        {/* Asymmetric editorial grid */}
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-3 h-auto md:h-[620px]">
+
+          {/* Left — Chrome Accessories (full height, col 1-6) */}
+          <motion.div
+            initial={{ opacity: 0, x: -30 }}
+            animate={inView ? { opacity: 1, x: 0 } : {}}
+            transition={{ duration: 0.6, delay: 0.1 }}
+            className="md:col-span-6 relative"
+          >
+            <Link
+              href="/collections/chrome-accessories"
+              className="group relative flex h-[380px] md:h-full overflow-hidden bg-[#141414]"
+            >
+              <Image
+                src="https://images.unsplash.com/photo-1558618048-fbd710b2b79e?w=800&q=80"
+                alt="Chrome Accessories"
+                fill
+                sizes="(max-width: 768px) 100vw, 50vw"
+                className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
+              />
+
+              {/* Dark overlay */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
+
+              {/* Gold vertical accent bar */}
+              <div className="absolute left-0 top-0 bottom-0 w-[3px] bg-[#c8922a] translate-x-[-3px] group-hover:translate-x-0 transition-transform duration-500 ease-out" />
+
+              {/* Content */}
+              <div className="absolute bottom-0 left-0 right-0 p-7">
+                <span className="text-[#c8922a] font-['Barlow_Condensed'] text-[10px] tracking-[0.4em] uppercase font-bold">
+                  01
+                </span>
+                <h3 className="font-display text-3xl sm:text-4xl text-white tracking-wide mt-1 mb-2">
+                  CHROME<br />ACCESSORIES
+                </h3>
+                <p className="text-[#888] text-xs leading-relaxed mb-4 max-w-[260px]">
+                  Mirrors, grille guards, bug deflectors &amp; more
+                </p>
+                <div className="flex items-center gap-0 overflow-hidden">
+                  <span className="font-['Barlow_Condensed'] text-[#c8922a] text-xs uppercase tracking-widest font-bold opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    SHOP NOW
+                  </span>
+                  <div className="h-px bg-[#c8922a] w-0 group-hover:w-24 transition-all duration-500 ease-out ml-2" />
+                </div>
+              </div>
+            </Link>
+          </motion.div>
+
+          {/* Right — LED + Exhaust stacked (col 7-12) */}
+          <div className="md:col-span-6 grid grid-rows-2 gap-3 h-[500px] md:h-full">
+
+            {/* LED Lighting (top) */}
             <motion.div
-              key={cat.href}
-              initial={{ opacity: 0, y: 30 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.5, delay: i * 0.08 }}
+              initial={{ opacity: 0, x: 30 }}
+              animate={inView ? { opacity: 1, x: 0 } : {}}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="relative"
             >
               <Link
-                href={cat.href}
-                className="group relative block aspect-[3/4] overflow-hidden bg-[#141414]"
+                href="/collections/led-lighting"
+                className="group relative flex h-full overflow-hidden bg-[#141414]"
               >
                 <Image
-                  src={cat.image}
-                  alt={cat.title}
+                  src="https://images.unsplash.com/photo-1544636331-e26879cd4d9b?w=800&q=80"
+                  alt="LED Lighting"
                   fill
-                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-                  className="object-cover transition-transform duration-500 group-hover:scale-[1.05]"
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                  className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
                 />
-                {/* Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
-                {/* Content */}
-                <div className="absolute bottom-0 left-0 right-0 p-5">
-                  <h3 className="font-display text-xl text-white tracking-wide mb-1">
-                    {cat.title.toUpperCase()}
-                  </h3>
-                  <p className="text-[#888] text-xs leading-relaxed mb-3">{cat.subtitle}</p>
-                  <span className="inline-flex items-center gap-1.5 text-[#c8922a] text-xs uppercase tracking-widest font-medium group-hover:gap-3 transition-all duration-200">
-                    Shop Now <ArrowRight className="h-3.5 w-3.5" />
-                  </span>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+
+                {/* Corner bracket top-right */}
+                <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <div className="w-5 h-5 border-t-2 border-r-2 border-[#c8922a]" />
                 </div>
-                {/* Hover border */}
-                <div className="absolute inset-0 border border-[#c8922a]/0 group-hover:border-[#c8922a]/40 transition-colors duration-300" />
+
+                <div className="absolute bottom-0 left-0 right-0 p-5">
+                  <span className="text-[#c8922a] font-['Barlow_Condensed'] text-[10px] tracking-[0.4em] uppercase font-bold">
+                    02
+                  </span>
+                  <h3 className="font-display text-2xl text-white tracking-wide mt-0.5 mb-1">
+                    LED LIGHTING
+                  </h3>
+                  <div className="flex items-center gap-0 overflow-hidden">
+                    <span className="font-['Barlow_Condensed'] text-[#c8922a] text-xs uppercase tracking-widest font-bold opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      SHOP NOW
+                    </span>
+                    <div className="h-px bg-[#c8922a] w-0 group-hover:w-16 transition-all duration-500 ease-out ml-2" />
+                  </div>
+                </div>
               </Link>
             </motion.div>
-          ))}
+
+            {/* Exhaust Systems (bottom) */}
+            <motion.div
+              initial={{ opacity: 0, x: 30 }}
+              animate={inView ? { opacity: 1, x: 0 } : {}}
+              transition={{ duration: 0.6, delay: 0.3 }}
+              className="relative"
+            >
+              <Link
+                href="/collections/exhaust-systems"
+                className="group relative flex h-full overflow-hidden bg-[#141414]"
+              >
+                <Image
+                  src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80"
+                  alt="Exhaust Systems"
+                  fill
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                  className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+
+                {/* Corner bracket bottom-left */}
+                <div className="absolute bottom-4 left-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <div className="w-5 h-5 border-b-2 border-l-2 border-[#c8922a]" />
+                </div>
+
+                <div className="absolute bottom-0 left-0 right-0 p-5">
+                  <span className="text-[#c8922a] font-['Barlow_Condensed'] text-[10px] tracking-[0.4em] uppercase font-bold">
+                    03
+                  </span>
+                  <h3 className="font-display text-2xl text-white tracking-wide mt-0.5 mb-1">
+                    EXHAUST SYSTEMS
+                  </h3>
+                  <div className="flex items-center gap-0 overflow-hidden">
+                    <span className="font-['Barlow_Condensed'] text-[#c8922a] text-xs uppercase tracking-widest font-bold opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      SHOP NOW
+                    </span>
+                    <div className="h-px bg-[#c8922a] w-0 group-hover:w-16 transition-all duration-500 ease-out ml-2" />
+                  </div>
+                </div>
+              </Link>
+            </motion.div>
+
+          </div>
         </div>
       </div>
     </section>

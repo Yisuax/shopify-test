@@ -73,8 +73,12 @@ export default function ProductCard({ product, priority = false }: ProductCardPr
             />
           </motion.div>
         ) : (
-          <div className="w-full h-full flex items-center justify-center">
-            <ShoppingBag className="h-12 w-12 text-[#333]" />
+          <div className="absolute inset-0 flex items-center justify-center bg-[#0E0E0E]">
+            <svg viewBox="0 0 100 100" className="w-1/3 h-1/3 opacity-20" fill="none" stroke="#F8BC51" strokeWidth="3" aria-hidden="true">
+              <path d="M50 8 L87 29 L87 71 L50 92 L13 71 L13 29 Z" />
+              <path d="M50 27 L70 38.5 L70 61.5 L50 73 L30 61.5 L30 38.5 Z" />
+              <circle cx="50" cy="50" r="9" />
+            </svg>
           </div>
         )}
 

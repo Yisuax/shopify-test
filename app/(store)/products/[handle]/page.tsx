@@ -37,12 +37,11 @@ export async function generateMetadata({ params }: ProductPageProps): Promise<Me
 export default async function ProductPage({ params }: ProductPageProps) {
   const { handle } = await params
 
-  const [product, recommendations] = await Promise.all([
-    getProduct(handle),
-    getProductRecommendations('').catch(() => []),
-  ])
+  const product = await getProduct(handle)
 
   if (!product) notFound()
+
+  const recommendations = await getProductRecommendations(product.id).catch(() => [])
 
   const related = recommendations.filter((p) => p.handle !== handle).slice(0, 4)
 

@@ -203,10 +203,11 @@ function ShopProductCard({ product }: { product: ShopifyProduct }) {
             className="object-contain p-8 group-hover:scale-105 transition-transform duration-500"
           />
         ) : (
-          <div className="w-full h-full flex items-center justify-center text-[#504536]">
-            <svg className="w-12 h-12" fill="none" stroke="currentColor" strokeWidth="1" viewBox="0 0 24 24">
-              <rect width="20" height="20" x="2" y="2" rx="1" />
-              <polyline points="21 15 16 10 5 21" />
+          <div className="absolute inset-0 flex items-center justify-center bg-[#0E0E0E]">
+            <svg viewBox="0 0 100 100" className="w-1/3 h-1/3 opacity-20" fill="none" stroke="#F8BC51" strokeWidth="3" aria-hidden="true">
+              <path d="M50 8 L87 29 L87 71 L50 92 L13 71 L13 29 Z" />
+              <path d="M50 27 L70 38.5 L70 61.5 L50 73 L30 61.5 L30 38.5 Z" />
+              <circle cx="50" cy="50" r="9" />
             </svg>
           </div>
         )}

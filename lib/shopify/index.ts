@@ -14,14 +14,6 @@ import {
   CART_LINES_REMOVE_MUTATION,
 } from './mutations/cart'
 import type { ShopifyProduct, ShopifyCollection, ShopifyCart } from './types'
-import {
-  getMockProduct,
-  getMockProducts,
-  getMockCollection,
-  getMockCollections,
-  searchMockProducts,
-  getMockFeaturedProducts,
-} from '../mock-data'
 
 // ---------------------------------------------------------------------------
 // Response shape helpers
@@ -82,7 +74,8 @@ export async function getProduct(handle: string): Promise<ShopifyProduct | null>
   })
 
   if (data?.product) return data.product
-  return getMockProduct(handle)
+  console.error('[shopify] fetch failed: getProduct returned null for handle:', handle)
+  return null
 }
 
 export async function getProducts(first = 12, after?: string): Promise<{
@@ -104,8 +97,8 @@ export async function getProducts(first = 12, after?: string): Promise<{
     }
   }
 
-  const products = getMockProducts(first)
-  return { products, hasNextPage: false, endCursor: null }
+  console.error('[shopify] fetch failed: getProducts returned null')
+  return { products: [], hasNextPage: false, endCursor: null }
 }
 
 export async function getFeaturedProducts(): Promise<ShopifyProduct[]> {
@@ -119,7 +112,8 @@ export async function getFeaturedProducts(): Promise<ShopifyProduct[]> {
     return data.products.edges.map((e) => e.node).slice(0, 6)
   }
 
-  return getMockFeaturedProducts()
+  console.error('[shopify] fetch failed: getFeaturedProducts returned null')
+  return []
 }
 
 export async function getProductRecommendations(productId: string): Promise<ShopifyProduct[]> {
@@ -130,7 +124,8 @@ export async function getProductRecommendations(productId: string): Promise<Shop
   })
 
   if (data?.productRecommendations?.length) return data.productRecommendations.slice(0, 4)
-  return getMockProducts(4)
+  console.error('[shopify] fetch failed: getProductRecommendations returned null for id:', productId)
+  return []
 }
 
 export async function searchProducts(query: string): Promise<ShopifyProduct[]> {
@@ -141,7 +136,8 @@ export async function searchProducts(query: string): Promise<ShopifyProduct[]> {
   })
 
   if (data?.products) return data.products.edges.map((e) => e.node)
-  return searchMockProducts(query)
+  console.error('[shopify] fetch failed: searchProducts returned null for query:', query)
+  return []
 }
 
 // ---------------------------------------------------------------------------
@@ -156,7 +152,8 @@ export async function getCollection(handle: string, productCount = 20): Promise<
   })
 
   if (data?.collection) return data.collection
-  return getMockCollection(handle)
+  console.error('[shopify] fetch failed: getCollection returned null for handle:', handle)
+  return null
 }
 
 export async function getCollections(): Promise<ShopifyCollection[]> {
@@ -166,7 +163,8 @@ export async function getCollections(): Promise<ShopifyCollection[]> {
   })
 
   if (data?.collections) return data.collections.edges.map((e) => e.node)
-  return getMockCollections()
+  console.error('[shopify] fetch failed: getCollections returned null')
+  return []
 }
 
 // ---------------------------------------------------------------------------

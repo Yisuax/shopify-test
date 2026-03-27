@@ -61,21 +61,26 @@ export async function addToCartAction(
   merchandiseId: string,
   quantity = 1
 ): Promise<{ cart: Cart | null; error?: string }> {
+  console.log('[cart] ADD TO CART CALLED', { variantId: merchandiseId, quantity })
   try {
     let cartId = await getCartId()
     let shopifyCart: ShopifyCart | null = null
 
     if (cartId) {
       shopifyCart = await addToCart(cartId, [{ merchandiseId, quantity }])
+      console.log('[cart] MUTATION RESULT (cartLinesAdd)', shopifyCart ? 'success' : 'null')
     }
 
     if (!shopifyCart) {
       // Either no cart yet or add failed — create a fresh one
       shopifyCart = await createCart([{ merchandiseId, quantity }])
+      console.log('[cart] MUTATION RESULT (cartCreate)', shopifyCart ? 'success id=' + shopifyCart.id : 'null')
     }
 
     if (!shopifyCart) {
-      return { cart: null, error: 'Failed to create cart' }
+      const error = 'Failed to create cart'
+      console.log('[cart] ERROR', error)
+      return { cart: null, error }
     }
 
     await setCartId(shopifyCart.id)
@@ -83,6 +88,7 @@ export async function addToCartAction(
 
     return { cart: normalizeCart(shopifyCart) }
   } catch (err) {
+    console.log('[cart] ERROR', err)
     console.error('[cart] addToCartAction error:', err)
     return { cart: null, error: 'An unexpected error occurred' }
   }
